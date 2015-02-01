@@ -4,7 +4,10 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 
 public class CustomList extends ActionBarActivity {
@@ -13,11 +16,19 @@ public class CustomList extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_custom_list);
-
+        final String[] list =  getResources().getStringArray(R.array.strList);
         ListView lvList = (ListView) findViewById(R.id.lvList);
-        CustomAdapter adapter = new CustomAdapter(this, R.layout.custom_row ,
-                getResources().getStringArray(R.array.strList));
+        CustomAdapter adapter = new CustomAdapter(this, R.layout.custom_row , list
+                );
         lvList.setAdapter(adapter);
+
+        lvList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String selectedCity = list[position];
+                Toast.makeText(CustomList.this, selectedCity , Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 
